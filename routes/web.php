@@ -11,6 +11,31 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', ['uses' => 'HomeController@index']);
+
+Route::get('/login',['uses' => 'AuthController@login']);
+
+Route::post('/login',['uses' => 'AuthController@auth']);
+
+Route::get('/logout',['uses' => 'AuthController@logout']);
+
+Route::get('/dashboard/overview', ['uses' => 'DashboardController@overview']);
+
+Route::get('/dashboard/clients', ['uses' => 'DashboardController@clients']);
+
+Route::get('/dashboard/clients/{id}', ['uses' => 'DashboardController@clientinfo']);;
+
+Route::post('/clients/add', ['uses' => 'ClientController@addClient']);
+
+Route::get('/dashboard/clients/admin', ['uses' => 'DashboardController@appsAdmin']);
+
+Route::get('/dashboard/users', ['uses' => 'DashboardController@users']);
+
+
+Route::get('/wel', function () {
     return view('welcome');
+});
+
+Route::get('/test', function () {
+    return "geg";
 });
