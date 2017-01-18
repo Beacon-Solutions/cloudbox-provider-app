@@ -39,3 +39,11 @@ Route::get('/wel', function () {
 Route::get('/test', function () {
     return "geg";
 });
+
+Route::get('/getCsrf', function () {
+    return csrf_token();
+});
+
+Route::post('/postPerformance',['uses' => 'DashboardController@postCompanyPerformance']);
+
+Route::post('/postLogFile',['uses' => 'DashboardController@postLogFile']);

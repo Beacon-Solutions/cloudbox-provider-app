@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -28,8 +31,9 @@ class DashboardController extends Controller
     public function clientinfo($id)
     {
         $client = DB::table('clients')->where('client_id', $id)->first();
-        return view('dashboard.clientinfo',['client' => $client]);
+        return view('dashboard.clientinfo', ['client' => $client]);
     }
+
     public function appsAdmin()
     {
         $all_user_apps = DB::table('user_app')
@@ -56,8 +60,43 @@ class DashboardController extends Controller
 
     public function users()
     {
-        $all_users = DB::table('user') -> get();
+        $all_users = DB::table('user')->get();
 
         return view('dashboard.users', ['all_users' => $all_users]);
+    }
+
+    public function postCompanyPerformance(Request $request)
+    {
+        $client = $request->input('client_name');
+        $client_usage = $request->input('client_cpu_usage');
+
+        $affected = \DB::update('update clients set client_cpu_usage = ? where client_name = ?', [$client_usage, $client]);
+        return response()->json([
+            'success' => true,
+            'output' => $client . " " . $client_usage
+        ]);
+
+    }
+
+    public function postLogFile(Request $request)
+    {
+        $client = $request->input('client_name');
+        $logFile = null;
+        if ($request->hasFile('logFile')) {
+            $logFile = $request->file('logFile');
+            $destinationPath = 'uploads/';
+            $companyName = $client;
+            $success = false;
+            if (Storage::disk('local')->exists($destinationPath . $companyName)) {
+                $a = 9;
+                Storage::disk('local')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
+                $success = true;
+            }
+            return response()->json([
+                'success' => $success,
+                'output' => $client . " " . $logFile->getClientOriginalName() . " file storing " . $success,
+                'a' => $a,
+            ]);
+        }
     }
 }
