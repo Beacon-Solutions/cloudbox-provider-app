@@ -5,10 +5,10 @@
             <div class="panel-body">
                 <div class="list-group">
                     @if (isset($client))
-                        <h4> <span>Client ID      :</span>{{ $client->client_id }}</h4>
-                        <h4> <span>Name           :</span> {{ $client->client_name }}</h4>
-                        <h4> <span>Address        :</span> {{ $client->client_address }}</h4>
-                        <h4> <span>Email          :</span> {{ $client->client_emailaddress }}</h4>
+                        <h4> <span>Client ID &emsp;:</span>{{ $client->client_id }}</h4>
+                        <h4> <span>Name &emsp;&emsp;:</span> {{ $client->client_name }}</h4>
+                        <h4> <span>Address &emsp;:</span> {{ $client->client_address }}</h4>
+                        <h4> <span>Email &emsp;&emsp; :</span> {{ $client->client_emailaddress }}</h4>
                     @endif
                 </div>
             </div>
@@ -26,28 +26,49 @@
         <div class="panel panel-info">
             <div class="panel-heading">Client Usage Information</div>
             <div class="panel-body">
-                @if (isset($client))
-
+                @if(isset($client))
                     <div class="row text-center">
-                        <div class="col-sm-4 utilisation_chart">
-                            <div class="chart" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400"></div>
-                            <span class="label label-info">{{ $client->space_usage_percentage }}%</span>
-                            <p class="label label-info">Space Utilisation</p>
-                        </div>
-                        <div class="col-sm-4 utilisation_chart">
-                            <div class="chart" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400"></div>
-                            <span class="label label-info">{{ $client->memory_usage_percentage }}%</span>
-                            <p class="label label-info">Memory Utilisation</p>
-                        </div>
-                        <div class="col-sm-4 utilisation_chart">
-                            <div class="chart" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400"></div>
-                            <span class="label label-info">{{ $client->client_cpu_usage }}%</span>
-                            <p class="label label-info">CPU Utilisation</p>
-                        </div>
+                        @if ($client->space_usage_percentage > 75)
+                            <div class="col-sm-4 utilisation_chart">
+                                <div class="chart-danger" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400"></div>
+                                <span class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
+                                <p class="label label-info lbl-topic">Space Utilisation</p>
+                            </div>
+                        @else
+                            <div class="col-sm-4 utilisation_chart">
+                                <div class="chart" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400"></div>
+                                <span class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
+                                <p class="label label-info lbl-topic">Space Utilisation</p>
+                            </div>
+                        @endif
+                        @if ($client->memory_usage_percentage > 75)
+                            <div class="col-sm-4 utilisation_chart">
+                                <div class="chart-danger" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400"></div>
+                                <<span class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
+                                <p class="label label-info lbl-topic">Memory Utilisation</p>
+                            </div>
+                        @else
+                            <div class="col-sm-4 utilisation_chart">
+                                <div class="chart" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400"></div>
+                                <span class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
+                                <p class="label label-info lbl-topic">Memory Utilisation</p>
+                            </div>
+                        @endif
+                        @if ($client->client_cpu_usage > 75)
+                            <div class="col-sm-4 utilisation_chart">
+                                <div class="chart-danger" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400"></div>
+                                <span class="label lbl-percentage">{{ $client->client_cpu_usage }}%</span>
+                                <p class="label label-info lbl-topic">CPU Utilisation</p>
+                            </div>
+                        @else
+                            <div class="col-sm-4 utilisation_chart">
+                                <div class="chart" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400"></div>
+                                <span class="label lbl-percentage">{{ $client->client_cpu_usage }}%</span>
+                                <p class="label label-info lbl-topic">CPU Utilisation</p>
+                            </div>
+                        @endif
                     </div>
-
-                    @endif
-
+                @endif
             </div>
         </div>
     </div>
@@ -58,7 +79,16 @@
         $(function() {
             $('.chart').easyPieChart({
                 size: 200,
-                lineWidth: 10
+                lineWidth: 5,
+                barColor: "#515fef"
+            });
+        });
+
+        $(function() {
+            $('.chart-danger').easyPieChart({
+                size: 200,
+                lineWidth: 5,
+                barColor: "#ef1e25"
             });
         });
 
