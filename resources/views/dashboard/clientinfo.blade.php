@@ -5,7 +5,7 @@
             <div class="panel-body">
                 <div class="list-group">
                     @if (isset($client))
-                        <h4> <span>Client ID &emsp;:</span>{{ $client->client_id }}</h4>
+                        <h4> <span>Client ID &emsp;:&nbsp;</span>{{ $client->client_id }}</h4>
                         <h4> <span>Name &emsp;&emsp;:</span> {{ $client->client_name }}</h4>
                         <h4> <span>Address &emsp;:</span> {{ $client->client_address }}</h4>
                         <h4> <span>Email &emsp;&emsp; :</span> {{ $client->client_emailaddress }}</h4>
@@ -73,8 +73,7 @@
         </div>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.easypiechart.js"></script>
+
     <script>
         $(function() {
             $('.chart').easyPieChart({
