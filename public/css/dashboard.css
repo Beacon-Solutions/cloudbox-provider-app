@@ -148,3 +148,14 @@ body {
     top: 20px;
     right: 20px;
 }
+
+.lbl-percentage{
+    position: absolute;
+    margin-top: -128px;
+    margin-left: 15px;
+    color: black;
+    font-size: 30px;
+}
+.lbl-topic{
+    font-size: 12px;
+}
