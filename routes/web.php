@@ -25,20 +25,9 @@ Route::get('/dashboard/clients', ['uses' => 'DashboardController@clients']);
 
 Route::get('/dashboard/clients/{id}', ['uses' => 'DashboardController@clientinfo']);;
 
+Route::get('/dashboard/addclient', ['uses' => 'DashboardController@addClient']);
+
 Route::post('/clients/add', ['uses' => 'ClientController@addClient']);
-
-Route::get('/dashboard/clients/admin', ['uses' => 'DashboardController@appsAdmin']);
-
-Route::get('/dashboard/users', ['uses' => 'DashboardController@users']);
-
-
-Route::get('/wel', function () {
-    return view('welcome');
-});
-
-Route::get('/test', function () {
-    return "geg";
-});
 
 Route::get('/getCsrf', function () {
     return csrf_token();

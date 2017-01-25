@@ -20,8 +20,13 @@ body {
  * Top navigation
  * Hide default border to remove 1px line.
  */
+.navbar-inverse .navbar-brand {
+
+    color: #ddffe0;
+}
 .navbar-fixed-top {
     border: 0;
+    background-color: #42ca8b;
 }
 
 /*
@@ -36,6 +41,10 @@ body {
 .log_image{
     height: 170px;
     text-align: center;
+}
+
+.text-change-link{
+    background-color: #4caf50 !important;
 }
 @media (min-width: 768px) {
     .sidebar {
@@ -69,7 +78,7 @@ body {
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
     color: #fff;
-    background-color: #428bca;
+    background-color: #42ca8b;
 }
 
 /*
