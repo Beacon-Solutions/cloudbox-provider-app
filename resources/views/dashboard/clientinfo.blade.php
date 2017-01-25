@@ -61,6 +61,21 @@
                 lineWidth: 10
             });
         });
+
+        $(function() {
+            $('#side-menu').find('ul li').eq(1).find('a').text('Back');
+            $('#side-menu').find('ul li').eq(1).find('a').addClass('text-change-link');
+        });
+
+
     </script>
+    <script>
+        $('#side-menu').find('ul li').find('a').click(function() {
+            $('#side-menu').find('ul li').eq(1).find('a').text('Clients');
+            $('#side-menu').find('ul li').eq(1).find('a').removeClass('text-change-link');
+
+        });
+    </script>
+
 </div>
 

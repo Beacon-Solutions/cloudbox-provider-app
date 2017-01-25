@@ -11,14 +11,35 @@ class DashboardController extends Controller
 {
     public function overview()
     {
+        $client_count = DB::table('clients')->count();
+        $app_count = 10;//DB::table('applications')->count();
+        $app_users = 12;//DB::table('applications')->count();
 
-        $all_running_apps = DB::table('user_app')->where('launched', 1)->whereNotNull('ipv4')->get();
+        /*$general_info = ['$client_count','$app_count','$app_users'];*/
+        $general_info = array(
+            "1"  => $client_count,
+            "2"  => $app_count,
+            "3"  => $app_users,
+        );
 
-        if ($all_running_apps->count() == 0) {
-            $all_running_apps = [];
-        }
+        $users_space = DB::table('clients')
+            ->where('space_usage_percentage', '>=', 75)
+            ->get();
+        $users_memory = DB::table('clients')
+            ->where('memory_usage_percentage', '>=', 75)
+            ->get();
+        $users_cpu = DB::table('clients')
+            ->where('client_cpu_usage', '>=', 75)
+            ->get();
 
-        return view('dashboard.overview', ['all_running_apps' => $all_running_apps]);
+        $danger_info = array
+        (
+            "space_risk" => array($users_space),
+            "memory_risk" => array($users_memory),
+            "cpu_risk" => array($users_cpu),
+        );
+
+        return view('dashboard.overview', ['general_info' => $general_info ], ['danger_info' => $danger_info ]);
     }
 
     public function clients()
@@ -34,35 +55,9 @@ class DashboardController extends Controller
         return view('dashboard.clientinfo', ['client' => $client]);
     }
 
-    public function appsAdmin()
+    public function addClient()
     {
-        $all_user_apps = DB::table('user_app')
-            ->where(['user_id' => session('id'), 'has_permission' => 1])
-            ->get();
-
-        $available_admin_apps = [];
-        foreach ($all_user_apps as $admin_app) {
-            $app_data = DB::table('app')->where('id', $admin_app->app_id)->first();
-            if ($app_data->app_type == 1) {
-                if (!isset($admin_app->name)) {
-                    $admin_app->name = $app_data->name;
-                }
-                if (!isset($admin_app->description)) {
-                    $admin_app->description = $app_data->description;
-                }
-                $available_admin_apps[] = $admin_app;
-            }
-
-        }
-
-        return view('dashboard.clients.admin', ['available_admin_apps' => $available_admin_apps]);
-    }
-
-    public function users()
-    {
-        $all_users = DB::table('user')->get();
-
-        return view('dashboard.users', ['all_users' => $all_users]);
+        return view('dashboard.addclient');
     }
 
     public function postCompanyPerformance(Request $request)

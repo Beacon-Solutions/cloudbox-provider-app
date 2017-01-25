@@ -27,7 +27,6 @@ class AuthController extends Controller
             if(isset($user) && $user->password == $password){
                 session(['username' => $user->username]);
                 session(['full_name' => $user->full_name]);
-                session(['type' => $user->role]);
                 session(['id' => $user->id]);
                 $is_success = true;
             }

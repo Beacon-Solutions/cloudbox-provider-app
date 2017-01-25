@@ -27,13 +27,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">CloudBox</a>
+            <a class="navbar-brand" href="#">CloudBox Management Interface</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" id="navbar-user"> {{$session_data['full_name']}}</a></li>
                 <li><a href="#">Help</a></li>
-                <li><a href="#">Profile</a></li>
                 <li><a href="{{url('logout')}}">Logout</a></li>
             </ul>
         </div>
