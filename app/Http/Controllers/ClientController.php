@@ -63,4 +63,10 @@ class ClientController extends Controller
         ]);
     }
 
+    public function getclientinfo($id)
+    {
+        $client = DB::table('clients')->where('client_id', $id)->first();
+        return ['client' => $client];
+    }
+
 }
