@@ -17,9 +17,9 @@ class DashboardController extends Controller
 
         /*$general_info = ['$client_count','$app_count','$app_users'];*/
         $general_info = array(
-            "1"  => $client_count,
-            "2"  => $app_count,
-            "3"  => $app_users,
+            "1" => $client_count,
+            "2" => $app_count,
+            "3" => $app_users,
         );
 
         $users_space = DB::table('clients')
@@ -39,7 +39,7 @@ class DashboardController extends Controller
             "cpu_risk" => array($users_cpu),
         );
 
-        return view('dashboard.overview', ['general_info' => $general_info ], ['danger_info' => $danger_info ]);
+        return view('dashboard.overview', ['general_info' => $general_info], ['danger_info' => $danger_info]);
     }
 
     public function clients()
@@ -75,21 +75,29 @@ class DashboardController extends Controller
 
     public function postLogFile(Request $request)
     {
-        $client = $request->input('client_name');
+        $client_id = $request->input('client_id');
         $logFile = null;
+        $client_name = null;
         if ($request->hasFile('logFile')) {
+            $client_name = DB::table('clients')
+                ->where('client_id', $client_id)
+                ->first()->client_name;
             $logFile = $request->file('logFile');
             $destinationPath = 'uploads/';
-            $companyName = $client;
+            $companyName = $client_name;
             $success = false;
             if (Storage::disk('local')->exists($destinationPath . $companyName)) {
-                $a = 9;
+                $a = "company folder existed";
+                Storage::disk('local')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
+                $success = true;
+            } else {
+                $a = "Company Folder did not exist.. Folder was created";
                 Storage::disk('local')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
                 $success = true;
             }
             return response()->json([
                 'success' => $success,
-                'output' => $client . " " . $logFile->getClientOriginalName() . " file storing " . $success,
+                'output' => $client_name . " " . $logFile->getClientOriginalName() . " file storing " . $success,
                 'a' => $a,
             ]);
         }
