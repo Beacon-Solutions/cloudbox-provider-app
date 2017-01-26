@@ -28,45 +28,25 @@
             <div class="panel-body">
                 @if(isset($client))
                     <div class="row text-center">
-                        @if ($client->space_usage_percentage > 75)
-                            <div class="col-sm-4 utilisation_chart">
-                                <div class="chart-danger" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400"></div>
-                                <span class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
-                                <p class="label label-info lbl-topic">Space Utilisation</p>
+                        <div class="col-sm-4 utilisation_chart">
+                            <div id="chart_storage" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400">
+                                <span id="chart_storage_lbl" class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
                             </div>
-                        @else
-                            <div class="col-sm-4 utilisation_chart">
-                                <div class="chart" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400"></div>
-                                <span class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
-                                <p class="label label-info lbl-topic">Space Utilisation</p>
+                            <p class="label label-info lbl-topic">Space Utilisation</p>
+                        </div>
+                        <div class="col-sm-4 utilisation_chart">
+                            <div id="chart_memory" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400">
+                                <span id="chart_memory_lbl" class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
                             </div>
-                        @endif
-                        @if ($client->memory_usage_percentage > 75)
-                            <div class="col-sm-4 utilisation_chart">
-                                <div class="chart-danger" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400"></div>
-                                <<span class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
-                                <p class="label label-info lbl-topic">Memory Utilisation</p>
+                            <p class="label label-info lbl-topic">Memory Utilisation</p>
+                        </div>
+
+                        <div class="col-sm-4 utilisation_chart">
+                            <div id="chart_cpu" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400">
+                                <span id="chart_cpu_lbl" class="label lbl-percentage ">{{ $client->client_cpu_usage }}%</span>
                             </div>
-                        @else
-                            <div class="col-sm-4 utilisation_chart">
-                                <div class="chart" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400"></div>
-                                <span class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
-                                <p class="label label-info lbl-topic">Memory Utilisation</p>
-                            </div>
-                        @endif
-                        @if ($client->client_cpu_usage > 75)
-                            <div class="col-sm-4 utilisation_chart">
-                                <div class="chart-danger" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400"></div>
-                                <span class="label lbl-percentage">{{ $client->client_cpu_usage }}%</span>
-                                <p class="label label-info lbl-topic">CPU Utilisation</p>
-                            </div>
-                        @else
-                            <div class="col-sm-4 utilisation_chart">
-                                <div class="chart" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400"></div>
-                                <span class="label lbl-percentage">{{ $client->client_cpu_usage }}%</span>
-                                <p class="label label-info lbl-topic">CPU Utilisation</p>
-                            </div>
-                        @endif
+                            <p class="label label-info lbl-topic">CPU Utilisation</p>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -76,20 +56,38 @@
 
     <script>
         $(function() {
-            $('.chart').easyPieChart({
+            $('#chart_storage').easyPieChart({
                 size: 200,
                 lineWidth: 5,
-                barColor: "#515fef"
+                barColor: "#5253ef"
             });
+            $('#chart_memory').easyPieChart({
+                size: 200,
+                lineWidth: 5,
+                barColor: "#5253ef"
+            });
+            $('#chart_cpu').easyPieChart({
+                size: 200,
+                lineWidth: 5,
+                barColor: "#5253ef"
+            });
+
         });
 
-        $(function() {
-            $('.chart-danger').easyPieChart({
-                size: 200,
-                lineWidth: 5,
-                barColor: "#ef1e25"
+        setInterval(function() {
+
+            $.ajax({
+                url: "/clients/usage/{{$client->client_id }}",
+                success: function( result ) {
+                    $('#chart_storage').data('easyPieChart').update(result.client.space_usage_percentage);
+                    $('#chart_storage_lbl').text(result.client.space_usage_percentage+"%");
+                    $('#chart_memory').data('easyPieChart').update(result.client.memory_usage_percentage);
+                    $('#chart_memory_lbl').text(result.client.memory_usage_percentage+"%");
+                    $('#chart_cpu').data('easyPieChart').update(result.client.client_cpu_usage);
+                    $('#chart_cpu_lbl').text(result.client.client_cpu_usage+"%");
+                }
             });
-        });
+        }, 1000);
 
         $(function() {
             $('#side-menu').find('ul li').eq(1).find('a').text('Back');

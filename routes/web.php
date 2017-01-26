@@ -29,6 +29,8 @@ Route::get('/dashboard/addclient', ['uses' => 'DashboardController@addClient']);
 
 Route::post('/clients/add', ['uses' => 'ClientController@addClient']);
 
+Route::get('/clients/usage/{id}', ['uses' => 'ClientController@getclientinfo']);
+
 Route::get('/getCsrf', function () {
     return csrf_token();
 });
