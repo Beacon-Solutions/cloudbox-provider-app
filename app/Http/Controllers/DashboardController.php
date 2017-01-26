@@ -88,13 +88,13 @@ class DashboardController extends Controller
             $destinationPath = 'uploads/';
             $companyName = $client_name;
             $success = false;
-            if (Storage::disk('local')->exists($destinationPath . $companyName)) {
+            if (Storage::disk('public')->exists($destinationPath . $companyName)) {
                 $a = "company folder existed";
-                Storage::disk('local')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
+                Storage::disk('public')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
                 $success = true;
             } else {
                 $a = "Company Folder did not exist.. Folder was created";
-                Storage::disk('local')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
+                Storage::disk('public')->putFileAs($destinationPath . $companyName, $logFile, $logFile->getClientOriginalName());
                 $success = true;
             }
             return response()->json([
@@ -103,5 +103,23 @@ class DashboardController extends Controller
                 'a' => $a,
             ]);
         }
+    }
+
+    public function getLogFile(Request $request) {
+        $client_name = $request->input('client_name');
+        $name = "public/uploads/".$client_name;
+        $files = Storage::files($name);
+        $noOfFiles = sizeof($files);
+        $url = null;
+        if ($noOfFiles>0) {
+            $url  = Storage::url($files[0]);
+            return redirect($url);
+        }
+
+        return response()->json([
+            'noOfFiles' => $noOfFiles,
+            'url' => $url,
+            'name' => $client_name,
+        ]);
     }
 }

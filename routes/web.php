@@ -13,11 +13,11 @@
 
 Route::get('/', ['uses' => 'HomeController@index']);
 
-Route::get('/login',['uses' => 'AuthController@login']);
+Route::get('/login', ['uses' => 'AuthController@login']);
 
-Route::post('/login',['uses' => 'AuthController@auth']);
+Route::post('/login', ['uses' => 'AuthController@auth']);
 
-Route::get('/logout',['uses' => 'AuthController@logout']);
+Route::get('/logout', ['uses' => 'AuthController@logout']);
 
 Route::get('/dashboard/overview', ['uses' => 'DashboardController@overview']);
 
@@ -35,6 +35,8 @@ Route::get('/getCsrf', function () {
     return csrf_token();
 });
 
-Route::post('/postPerformance',['uses' => 'DashboardController@postCompanyPerformance']);
+Route::post('/postPerformance', ['uses' => 'DashboardController@postCompanyPerformance']);
 
-Route::post('/postLogFile',['uses' => 'DashboardController@postLogFile']);
+Route::post('/postLogFile', ['uses' => 'DashboardController@postLogFile']);
+
+Route::post('/getLogFile', ['uses' => 'DashboardController@getLogFile']);
