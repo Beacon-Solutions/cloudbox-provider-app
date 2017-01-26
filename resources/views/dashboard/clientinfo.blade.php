@@ -18,7 +18,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">View Client Logs</div>
             <div class="panel-body">
-                <a href="logs/log1.txt" target="_blank"><img class="log_image" src="https://static1.squarespace.com/static/53d3b6bce4b07304e90385a9/t/53d8097ae4b0046e8e340482/1406667169736/" alt=""></a>
+                <a href="/storage/uploads/{{ $client->client_name }}/nova-api.log" target="_blank"><img class="log_image" src="https://static1.squarespace.com/static/53d3b6bce4b07304e90385a9/t/53d8097ae4b0046e8e340482/1406667169736/" alt=""></a>
             </div>
         </div>
     </div>
@@ -74,7 +74,7 @@
 
         });
 
-        setInterval(function() {
+        var interval = setInterval(function() {
 
             $.ajax({
                 url: "/clients/usage/{{$client->client_id }}",
@@ -92,6 +92,10 @@
         $(function() {
             $('#side-menu').find('ul li').eq(1).find('a').text('Back');
             $('#side-menu').find('ul li').eq(1).find('a').addClass('text-change-link');
+            $('#side-menu').find('ul li').find('a').click(function () {
+                clearInterval(interval);
+            })
+
         });
 
 
