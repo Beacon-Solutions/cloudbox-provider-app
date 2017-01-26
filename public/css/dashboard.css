@@ -148,3 +148,17 @@ body {
     top: 20px;
     right: 20px;
 }
+
+.lbl-percentage{
+    position: absolute;
+    /* margin-top: -128px; */
+    /* margin-left: 15px; */
+    color: black;
+    font-size: 30px;
+    /* vertical-align: middle; */
+    padding-top: 21%;
+    padding-left: 19%;
+}
+.lbl-topic{
+    font-size: 12px;
+}

@@ -62,13 +62,15 @@ class DashboardController extends Controller
 
     public function postCompanyPerformance(Request $request)
     {
-        $client = $request->input('client_name');
-        $client_usage = $request->input('client_cpu_usage');
+        $client_id = $request->input('client_id');
+        $client_usage_storage = $request->input('client_storage_usage');
+        $client_usage_memory = $request->input('client_memory_usage');
+        $client_usage_cpu = $request->input('client_cpu_usage');
 
-        $affected = \DB::update('update clients set client_cpu_usage = ? where client_name = ?', [$client_usage, $client]);
+        $affected = \DB::update('update clients set space_usage_percentage = ?,memory_usage_percentage = ?,client_cpu_usage = ?  where client_id = ?', [$client_usage_storage, $client_usage_memory, $client_usage_cpu, $client_id]);
         return response()->json([
             'success' => true,
-            'output' => $client . " " . $client_usage
+            'output' => $client_id . " " . $client_usage_storage . " " . $client_usage_memory . " " . $client_usage_cpu
         ]);
 
     }
