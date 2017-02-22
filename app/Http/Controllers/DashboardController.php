@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class DashboardController extends Controller
 {
@@ -121,5 +122,34 @@ class DashboardController extends Controller
             'url' => $url,
             'name' => $client_name,
         ]);
+    }
+
+    public function postUserInfo(Request $request)
+    {
+        $client_id = $request->input('client_id');
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        $client_name = DB::table('clients')
+            ->where('client_id', $client_id)
+            ->first()->client_name;
+
+        $abs_path='../storage/client_user_info/';
+        $file_name = $client_name;
+        $file_path = $abs_path . $file_name;
+
+        if (file_exists($file_path)) {
+            $fh = fopen($file_path, 'a');
+        } else {
+            $fh = fopen($file_path, 'w');
+        }
+        fwrite($fh, $username . " " . $password . "\n");
+        fclose($fh);
+
+        return response()->json([
+            'success' => true,
+            'output' => "Client information added"
+        ]);
+
     }
 }
