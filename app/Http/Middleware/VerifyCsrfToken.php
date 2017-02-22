@@ -16,5 +16,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/postLogFile',
         '/postPerformance',
         '/getLogFile',
+        '/postUserInfo',
     ];
 }

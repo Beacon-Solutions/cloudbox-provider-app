@@ -37,6 +37,8 @@ Route::get('/getCsrf', function () {
 
 Route::post('/postPerformance', ['uses' => 'DashboardController@postCompanyPerformance']);
 
+Route::post('/postUserInfo', ['uses' => 'DashboardController@postUserInfo']);
+
 Route::post('/postLogFile', ['uses' => 'DashboardController@postLogFile']);
 
 Route::post('/getLogFile', ['uses' => 'DashboardController@getLogFile']);
