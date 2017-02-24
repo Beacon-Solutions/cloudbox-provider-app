@@ -43,6 +43,8 @@ Route::post('/postLogFile', ['uses' => 'DashboardController@postLogFile']);
 
 Route::post('/getLogFile', ['uses' => 'DashboardController@getLogFile']);
 
+Route::get('/getGlobalNews', ['uses' => 'ClientController@getGlobalNews']);
+
 Route::post('/clients/message', ['uses' => 'ClientController@setMessage']);
 
 Route::get('/clients/getMessage/{id}', ['uses' => 'ClientController@clientMessage']);

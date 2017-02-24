@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class ClientController extends Controller
 {
@@ -81,4 +83,13 @@ class ClientController extends Controller
         return $client->message;
     }
 
+    public function getGlobalNews(){
+        $abs_path='../storage/';
+        $file_name = 'news.txt';
+        $file_path = $abs_path . $file_name;
+
+
+        $contents= file_get_contents($file_path);
+        return $contents;
+    }
 }
