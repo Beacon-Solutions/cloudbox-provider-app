@@ -69,4 +69,16 @@ class ClientController extends Controller
         return ['client' => $client];
     }
 
+    public function setMessage(){
+        $message = request()->input('client_message');
+        $client_id = request()->input('client_id');
+        \DB::table('clients')->where('client_id', $client_id)->update(['message' => $message]);
+
+    }
+
+    public function clientMessage($id){
+        $client = DB::table('clients')->where('client_id', $id)->first();
+        return $client->message;
+    }
+
 }

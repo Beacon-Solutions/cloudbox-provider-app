@@ -23,7 +23,7 @@ Route::get('/dashboard/overview', ['uses' => 'DashboardController@overview']);
 
 Route::get('/dashboard/clients', ['uses' => 'DashboardController@clients']);
 
-Route::get('/dashboard/clients/{id}', ['uses' => 'DashboardController@clientinfo']);;
+Route::get('/dashboard/clients/{id}', ['uses' => 'DashboardController@clientinfo']);
 
 Route::get('/dashboard/addclient', ['uses' => 'DashboardController@addClient']);
 
@@ -42,3 +42,7 @@ Route::post('/postUserInfo', ['uses' => 'DashboardController@postUserInfo']);
 Route::post('/postLogFile', ['uses' => 'DashboardController@postLogFile']);
 
 Route::post('/getLogFile', ['uses' => 'DashboardController@getLogFile']);
+
+Route::post('/clients/message', ['uses' => 'ClientController@setMessage']);
+
+Route::get('/clients/getMessage/{id}', ['uses' => 'ClientController@clientMessage']);
