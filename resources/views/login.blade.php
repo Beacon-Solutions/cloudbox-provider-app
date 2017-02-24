@@ -26,7 +26,7 @@
             <div class="well bs-component shadow-well">
                 <form class="form-horizontal" method="POST" action="{{url('login')}}">
                     <fieldset>
-                        <legend>User Login</legend>
+                        <legend>Service Provider Login</legend>
                         <div class="form-group">
                             <label for="inputUsername" class="col-lg-2 control-label">Username</label>
                             <div class="col-lg-10">

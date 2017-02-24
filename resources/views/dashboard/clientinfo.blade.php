@@ -30,21 +30,21 @@
                     <div class="row text-center">
                         <div class="col-sm-4 utilisation_chart">
                             <div id="chart_storage" data-percent={{ $client->space_usage_percentage }} data-scale-color="#ffb400">
-                                <span id="chart_storage_lbl" class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
                             </div>
+                            <span id="chart_storage_lbl" class="label lbl-percentage">{{ $client->space_usage_percentage }}%</span>
                             <p class="label label-info lbl-topic">Space Utilisation</p>
                         </div>
                         <div class="col-sm-4 utilisation_chart">
                             <div id="chart_memory" data-percent={{ $client->memory_usage_percentage }} data-scale-color="#ffb400">
-                                <span id="chart_memory_lbl" class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
                             </div>
+                            <span id="chart_memory_lbl" class="label lbl-percentage">{{ $client->memory_usage_percentage }}%</span>
                             <p class="label label-info lbl-topic">Memory Utilisation</p>
                         </div>
 
                         <div class="col-sm-4 utilisation_chart">
                             <div id="chart_cpu" data-percent={{ $client->client_cpu_usage }} data-scale-color="#ffb400">
-                                <span id="chart_cpu_lbl" class="label lbl-percentage ">{{ $client->client_cpu_usage }}%</span>
                             </div>
+                            <span id="chart_cpu_lbl" class="label lbl-percentage ">{{ $client->client_cpu_usage }}%</span>
                             <p class="label label-info lbl-topic">CPU Utilisation</p>
                         </div>
                     </div>
